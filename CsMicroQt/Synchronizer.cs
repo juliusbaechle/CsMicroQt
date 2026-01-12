@@ -5,8 +5,8 @@
         }
 
         public int Exec() {
-            m_exit = false;
-            while (!m_exit)
+            IsRunning = true;
+            while (IsRunning)
                 m_eventLoop.Update();
             return m_exitCode;
         }
@@ -14,16 +14,13 @@
         public void Exit(int a_exitCode) {
             m_eventLoop.EnqueueEvent(() => {
                 m_exitCode = a_exitCode;
-                m_exit = true;
+                IsRunning = false;
             });
         }
 
-        public bool IsRunning() {
-            return !m_exit;
-        }
+        public bool IsRunning { get; private set; }
 
         private EventLoop m_eventLoop;
-        private bool m_exit = true;
         private int m_exitCode = 0;
     }
 }
