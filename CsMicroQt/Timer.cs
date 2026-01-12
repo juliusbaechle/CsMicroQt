@@ -1,6 +1,6 @@
 ﻿namespace MicroQt {
-    public class Timer : IDisposable {
-        public Timer(EventLoop a_eventLoop, uint a_intervalMs = 0) {
+    public class MTimer : IDisposable {
+        public MTimer(MEventLoop a_eventLoop, uint a_intervalMs = 0) {
             m_eventLoop = a_eventLoop;
             IntervalMs = a_intervalMs;
             m_taskId = m_eventLoop.RegisterTask(Update);
@@ -51,7 +51,7 @@
         public uint IntervalMs { get; set; } = 0;
         public bool Active { get; private set; } = false;
 
-        private EventLoop m_eventLoop;
+        private MEventLoop m_eventLoop;
         private uint m_taskId = 0;
         private uint m_timeElapsed = 0;
         private uint m_startMs = 0;

@@ -1,5 +1,5 @@
 ﻿namespace MicroQt {
-    public class EventLoop {
+    public class MEventLoop {
         public int Exec() {
             IsRunning = true;
             while (IsRunning)

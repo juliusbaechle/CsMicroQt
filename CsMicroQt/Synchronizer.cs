@@ -1,6 +1,6 @@
 ﻿namespace MicroQt {
-    public class Synchronizer {
-        public Synchronizer(EventLoop a_eventLoop) {
+    public class MSynchronizer {
+        public MSynchronizer(MEventLoop a_eventLoop) {
             m_eventLoop = a_eventLoop;
         }
 
@@ -20,7 +20,7 @@
 
         public bool IsRunning { get; private set; }
 
-        private EventLoop m_eventLoop;
+        private MEventLoop m_eventLoop;
         private int m_exitCode = 0;
     }
 }

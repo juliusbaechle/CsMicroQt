@@ -5,9 +5,9 @@ namespace MicroQtTests {
     public sealed class TestTimer {
         [TestMethod]
         public void Test() {
-            EventLoop eventLoop = new();
+            MEventLoop eventLoop = new();
 
-            MicroQt.Timer timer1 = new(eventLoop);
+            MTimer timer1 = new(eventLoop);
             timer1.Elapsed += () => { 
                 timer1.Dispose(); 
                 eventLoop.Exit(1); 
@@ -16,7 +16,7 @@ namespace MicroQtTests {
             timer1.SingleShot = true;
 
             uint counter = 0;
-            MicroQt.Timer timer2 = new(eventLoop, 50);
+            MTimer timer2 = new(eventLoop, 50);
             timer2.Elapsed += () => {
                 counter++;
                 if (timer1.Active)

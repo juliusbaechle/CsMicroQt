@@ -6,8 +6,8 @@ namespace MicroQtTests {
 
         [TestMethod]
         public void Test() {
-            EventLoop eventLoop = new();
-            Synchronizer synchronizer = new(eventLoop);
+            MEventLoop eventLoop = new();
+            MSynchronizer synchronizer = new(eventLoop);
             eventLoop.EnqueueEvent(() => {
                 eventLoop.EnqueueEvent(() => {
                     synchronizer.Exit(1);
