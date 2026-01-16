@@ -5,18 +5,18 @@ namespace MicroQtTests {
     public sealed class TestTimer {
         [TestMethod]
         public void Test() {
-            MEventLoop eventLoop = new();
+            MApplication app = new();
 
-            MTimer timer1 = new(eventLoop);
+            MTimer timer1 = new();
             timer1.Elapsed += () => { 
-                timer1.Dispose(); 
-                eventLoop.Exit(1); 
+                timer1.Dispose();
+                app.Exit(1); 
             };
             timer1.Start(140);
             timer1.SingleShot = true;
 
             uint counter = 0;
-            MTimer timer2 = new(eventLoop, 50);
+            MTimer timer2 = new(50);
             timer2.Elapsed += () => {
                 counter++;
                 if (timer1.Active)
@@ -26,7 +26,7 @@ namespace MicroQtTests {
             };
             timer2.Start();
 
-            eventLoop.Exec();
+            app.Exec();
             Assert.AreEqual((uint) 4, counter);
         }
     }
