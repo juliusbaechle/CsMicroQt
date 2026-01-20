@@ -1,7 +1,7 @@
 ﻿namespace MicroQt {
-    public class MEventLoop {
-        public MEventLoop() {
-            m_eventDispatcher = MEventDispatcher.Current();
+    public class MEventLoop : MObject {
+        public MEventLoop() : base() {
+            m_eventDispatcher = MEventDispatcherRegistry.Current();
         }
 
         public int Exec() {
@@ -11,9 +11,6 @@
             return m_exitCode;
         }
 
-        public bool IsRunning { get { return m_isRunning; } private set { m_isRunning = value; } }
-        private volatile bool m_isRunning = false;
-
         public void Exit(int a_exitCode) {
             m_eventDispatcher.EnqueueEvent(() => {
                 m_exitCode = a_exitCode;
@@ -21,7 +18,9 @@
             });
         }
 
+        public bool IsRunning { get; private set; }
+
         MEventDispatcher m_eventDispatcher;
-        private volatile int m_exitCode = 0;
+        private int m_exitCode = 0;
     }
 }

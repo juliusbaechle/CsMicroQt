@@ -1,25 +1,26 @@
 ﻿namespace MicroQt {
-    public class MThread {
+    public class MThread : MObject {
         public MThread() {
             m_thread = new(Run);
-            MApplication.Instance.ThreadPool.Register(this);
+            MEventDispatcherRegistry.Register(Id, new MEventDispatcher());
         }
 
         internal MThread(Thread a_thread) {
             m_thread = a_thread;
-            MApplication.Instance.ThreadPool.Register(this);
+            MEventDispatcherRegistry.Register(Id, new MEventDispatcher());
         }
 
-        public void Dispose() {
-            MApplication.Instance.ThreadPool.Unregister(Id);
+        public override void Dispose() {
+            base.Dispose();
+            MEventDispatcherRegistry.Unregister(Id);
         }
 
         public static MThread Current() {
-            return MApplication.Instance.ThreadPool.Current();
+            return new MThread(System.Threading.Thread.CurrentThread);
         }
 
         public static int CurrentThreadId() {
-            return Thread.CurrentThread.ManagedThreadId;
+            return System.Threading.Thread.CurrentThread.ManagedThreadId;
         }
 
         public void Start() {
@@ -50,7 +51,6 @@
         public event Action Finished = () => { };
 
         public int Id { get { return m_thread.ManagedThreadId; } }
-        public MEventDispatcher EventDispatcher { get; } = new();
 
         private MEventLoop? m_eventLoop = null;
         private Thread m_thread;

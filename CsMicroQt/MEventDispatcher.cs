@@ -1,10 +1,5 @@
 ﻿namespace MicroQt {
-    public class MEventDispatcher {
-
-        public static MEventDispatcher Current() {
-            return MThread.Current().EventDispatcher;
-        }
-
+    public class MEventDispatcher : MObject {
         internal void Update() {
             List<Action> tasks = [];
             List<Action> events = [];

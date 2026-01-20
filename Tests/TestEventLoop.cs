@@ -8,8 +8,8 @@ namespace MicroQtTests {
         public void Test() {
             MApplication app = new();
             MEventLoop eventLoop = new();
-            MEventDispatcher.Current().EnqueueEvent(() => {
-                MEventDispatcher.Current().EnqueueEvent(() => {
+            MEventDispatcherRegistry.Current().EnqueueEvent(() => {
+                MEventDispatcherRegistry.Current().EnqueueEvent(() => {
                     eventLoop.Exit(1);
                 });
                 int i = eventLoop.Exec();
@@ -19,5 +19,3 @@ namespace MicroQtTests {
         }
     }
 }
-
-// Thread exists --> Register EventDispatcher

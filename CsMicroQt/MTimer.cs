@@ -1,13 +1,13 @@
 ﻿namespace MicroQt {
-    public class MTimer : IDisposable {
-        public MTimer(uint a_intervalMs = 0) {
+    public class MTimer : MObject {
+        public MTimer(uint a_intervalMs = 0) : base() {
             IntervalMs = a_intervalMs;
-            m_eventDispatcher = MEventDispatcher.Current();
-            m_taskId = m_eventDispatcher.RegisterTask(Update);
+            m_taskId = MEventDispatcherRegistry.Get(ThreadId).RegisterTask(Update);
         }
 
-        public void Dispose() {
-            m_eventDispatcher.UnregisterTask(m_taskId);
+        public override void Dispose() {
+            base.Dispose();
+            MEventDispatcherRegistry.Get(ThreadId).UnregisterTask(m_taskId);
         }
 
         public void Start() {
@@ -54,6 +54,5 @@
         private uint m_taskId = 0;
         private uint m_timeElapsed = 0;
         private uint m_startMs = 0;
-        private MEventDispatcher m_eventDispatcher;
     }
 }
